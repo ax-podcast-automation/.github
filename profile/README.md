@@ -16,22 +16,22 @@ LLM 몇 번 호출하면 된다. 실제 문제는 **"그 대본이 원문에 없
 
 | | 내용 | 스택 |
 |---|---|---|
-| **[ax-podcast-ai](../../ax-podcast-ai)** | 파이프라인 · 계약 · Judge · 캘리브레이션. **여기가 본체다** | Python |
-| [ax-podcast-api](../../ax-podcast-api) | HTTP 레이어. 의도적으로 얇다 | FastAPI · SQLite |
-| [ax-podcast-web](../../ax-podcast-web) | 방송국용 화면 | Vite · React |
+| **[ai](../../ai)** | 파이프라인 · 계약 · Judge · 캘리브레이션. **여기가 본체다** | Python |
+| [backend](../../backend) | HTTP 레이어. 의도적으로 얇다 | FastAPI · SQLite |
+| [frontend](../../frontend) | 방송국용 화면 | Vite · React |
 
 의존은 한 방향으로만 흐른다.
 
 ```
-ax-podcast-web  ──HTTP──▶  ax-podcast-api  ──pip──▶  ax-podcast-ai
-       └──────── contracts/*.schema.json ────────────────┘
+frontend  ──HTTP──▶  backend  ──pip──▶  ai
+    └───────── contracts/*.schema.json ─────────┘
 ```
 
 **파이프라인은 웹을 모른다.** 캘리브레이션 숫자는 웹 없이 수백 번 돌려야 나오는데,
 그때마다 서버를 띄워야 하면 실험 속도가 죽고 발표 숫자가 안 나온다. 레포를 가른
 것은 이 경계를 약속이 아니라 구조로 만들기 위해서다.
 
-계약의 단일 출처는 `ax-podcast-ai` 의 pydantic 모델이고, JSON Schema는 거기서
+계약의 단일 출처는 `ai` 의 pydantic 모델이고, JSON Schema는 거기서
 생성해 아래 두 레포로 내려간다. 손으로 쓴 타입이 서버 응답과 어긋날 자리를 없앤다.
 
 ## 파이프라인
